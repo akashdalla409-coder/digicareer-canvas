@@ -49,7 +49,7 @@ export function JobBoard() {
 
       {/* Sticky search & filter rail */}
       <section id="board" className="sticky top-0 z-40 border-y border-border bg-background/85 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-6 py-4">
+        <div className="mx-auto max-w-7xl px-6 py-3">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative flex-1">
               <Search className="pointer-events-none absolute left-0 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -65,7 +65,7 @@ export function JobBoard() {
             <div className="flex flex-wrap items-center gap-2">
               <FilterSelect label="Level" value={level} onChange={setLevel} options={LEVELS as readonly string[]} />
               <FilterSelect label="Type" value={type} onChange={setType} options={TYPES as readonly string[]} />
-              <div className="flex items-center gap-1.5 bg-muted px-3 py-1.5 ring-1 ring-border">
+              <div className="flex items-center gap-1.5 rounded-full bg-muted px-4 py-1.5 ring-1 ring-border">
                 <MapPin className="size-3.5 text-muted-foreground" />
                 <input
                   value={location}
@@ -371,7 +371,7 @@ function FilterSelect({
   options: readonly string[];
 }) {
   return (
-    <div className="flex items-center gap-1.5 bg-muted px-3 py-1.5 ring-1 ring-border">
+    <div className="flex items-center gap-1.5 rounded-full bg-muted px-4 py-1.5 ring-1 ring-border">
       <span className="text-xs font-medium text-muted-foreground">{label}:</span>
       <select
         value={value ?? ""}
@@ -402,9 +402,9 @@ function Chip({
     <button
       onClick={onClick}
       className={cn(
-        "px-4 py-1.5 text-sm font-medium ring-1 ring-border transition-colors",
+        "rounded-full px-4 py-1.5 text-sm font-medium ring-1 ring-border transition-colors",
         active
-          ? "bg-foreground text-background"
+          ? "bg-foreground text-background ring-foreground"
           : "bg-muted text-muted-foreground hover:bg-accent hover:text-foreground"
       )}
     >
@@ -425,8 +425,8 @@ function JobRow({ job }: { job: Job }) {
     <article className="group relative bg-background p-8 transition-colors hover:bg-muted/60">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex gap-6">
-          <div className="grid size-14 shrink-0 place-items-center rounded-md bg-muted ring-1 ring-border">
-            <span className="font-serif text-lg italic">{monogram}</span>
+          <div className="grid size-14 shrink-0 place-items-center rounded-full bg-accent ring-1 ring-border">
+            <span className="font-serif text-lg italic text-accent-foreground">{monogram}</span>
           </div>
           <div>
             <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -452,7 +452,7 @@ function JobRow({ job }: { job: Job }) {
           <Link
             to="/jobs/$id"
             params={{ id: job.id }}
-            className="flex items-center gap-2 bg-muted py-1.5 pl-3 pr-4 text-sm font-medium text-foreground ring-1 ring-foreground transition-colors group-hover:bg-foreground group-hover:text-background"
+            className="flex items-center gap-2 rounded-full bg-muted py-1.5 pl-3 pr-4 text-sm font-medium text-foreground ring-1 ring-foreground transition-colors group-hover:bg-brand group-hover:text-brand-foreground group-hover:ring-brand"
           >
             <ArrowUpRight className="size-4" />
             View details
@@ -465,7 +465,7 @@ function JobRow({ job }: { job: Job }) {
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ring-1 ring-border bg-muted">
+    <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ring-1 ring-border">
       {children}
     </span>
   );
@@ -478,7 +478,7 @@ function EmptyState({ onReset }: { onReset: () => void }) {
       <p className="mt-2 text-muted-foreground">Try widening your filters or clearing the search.</p>
       <button
         onClick={onReset}
-        className="mt-6 inline-flex bg-foreground px-4 py-2 text-sm font-medium text-background"
+        className="mt-6 inline-flex rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background"
       >
         Reset filters
       </button>
