@@ -38,7 +38,12 @@ export const Route = createFileRoute("/jobs/$id")({
 
 function JobDetail() {
   const { job } = Route.useLoaderData();
-  const monogram = job.company.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  const monogram = job.company
+    .split(" ")
+    .map((w: string) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
