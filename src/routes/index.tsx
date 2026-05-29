@@ -1,29 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { JobBoard } from "@/components/job-board/JobBoard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "DigiCareers — The talent layer for digital marketing" },
+      { name: "description", content: "A curated job board for AdOps, Programmatic, SEO, Social, Affiliate, Design, WordPress and AI Marketing roles. Built for specialists, by specialists." },
+      { property: "og:title", content: "DigiCareers — The talent layer for digital marketing" },
+      { property: "og:description", content: "A curated job board for AdOps, Programmatic, SEO, Social, Affiliate, Design, WordPress and AI Marketing roles." },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  return <JobBoard />;
 }
