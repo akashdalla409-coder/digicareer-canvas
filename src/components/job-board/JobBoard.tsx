@@ -271,7 +271,7 @@ function Marquee() {
             key={i}
             className="font-serif text-3xl italic text-muted-foreground/80"
           >
-            {it} <span className="not-italic text-foreground/30">✦</span>
+            {it} <span className="not-italic text-brand">✦</span>
           </span>
         ))}
       </div>
