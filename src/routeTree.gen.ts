@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as JobsIdRouteImport } from './routes/jobs.$id'
@@ -23,6 +24,11 @@ const SignUpRoute = SignUpRouteImport.update({
 const SignInRoute = SignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostJobRoute = PostJobRouteImport.update({
+  id: '/post-job',
+  path: '/post-job',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -44,6 +50,7 @@ const JobsIdRoute = JobsIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/post-job': typeof PostJobRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/jobs/$id': typeof JobsIdRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/post-job': typeof PostJobRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/jobs/$id': typeof JobsIdRoute
@@ -59,19 +67,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/post-job': typeof PostJobRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/jobs/$id': typeof JobsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/forgot-password' | '/sign-in' | '/sign-up' | '/jobs/$id'
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/post-job'
+    | '/sign-in'
+    | '/sign-up'
+    | '/jobs/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/forgot-password' | '/sign-in' | '/sign-up' | '/jobs/$id'
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/post-job'
+    | '/sign-in'
+    | '/sign-up'
+    | '/jobs/$id'
   id:
     | '__root__'
     | '/'
     | '/forgot-password'
+    | '/post-job'
     | '/sign-in'
     | '/sign-up'
     | '/jobs/$id'
@@ -80,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  PostJobRoute: typeof PostJobRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
   JobsIdRoute: typeof JobsIdRoute
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/post-job': {
+      id: '/post-job'
+      path: '/post-job'
+      fullPath: '/post-job'
+      preLoaderRoute: typeof PostJobRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -128,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  PostJobRoute: PostJobRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   JobsIdRoute: JobsIdRoute,
@@ -135,3 +166,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
