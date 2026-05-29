@@ -511,7 +511,7 @@ function SiteFooter() {
         </div>
         <div className="mt-20 flex flex-col gap-3 border-t border-border pt-6 md:flex-row md:items-center md:justify-between">
           <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            © {new Date().getFullYear()} DigiCareers. All rights reserved.
+            © DigiCareers. All rights reserved.
           </p>
           <div className="flex gap-6 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             <a href="#" className="hover:text-foreground">Privacy</a>
