@@ -332,8 +332,6 @@ function ClosingBand() {
     </section>
   );
 }
-  );
-}
 
 function FilterSelect({
   label,
