@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, MapPin, Plus, Search, Sparkles } from "lucide-react";
 import { JOBS, LEVELS, ROLES, TYPES, type Job } from "./data";
 import { cn } from "@/lib/utils";
