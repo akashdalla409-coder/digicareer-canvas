@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, MapPin, Plus, Search, Sparkles } from "lucide-react";
+import { ArrowUpRight, MapPin, Plus, Search, ArrowRight } from "lucide-react";
 import { JOBS, LEVELS, ROLES, TYPES, type Job } from "./data";
 import { cn } from "@/lib/utils";
 
@@ -44,9 +44,11 @@ export function JobBoard() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <Hero count={JOBS.length} />
+      <Marquee />
+      <DisciplinesCatalog />
 
       {/* Sticky search & filter rail */}
-      <section className="sticky top-0 z-40 border-y border-border bg-background/85 backdrop-blur-md">
+      <section id="board" className="sticky top-0 z-40 border-y border-border bg-background/85 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative flex-1">
@@ -151,38 +153,183 @@ function SiteHeader() {
 
 function Hero({ count }: { count: number }) {
   return (
-    <header className="mx-auto max-w-7xl px-6 pb-20 pt-12">
-      <div className="grid items-end gap-12 lg:grid-cols-[1fr_360px]">
-        <div>
-          <p className="mb-6 inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-            <Sparkles className="size-3" />
-            The talent layer for digital marketing
-          </p>
-          <h1 className="text-balance font-serif text-6xl leading-[0.95] tracking-tight md:text-8xl">
-            Roles for the people who actually <em className="italic">run</em> the internet.
+    <header className="relative mx-auto max-w-7xl px-6 pb-24 pt-8">
+      {/* Top meta strip — masthead style */}
+      <div className="mb-16 flex items-center justify-between border-b border-border pb-4 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+        <span>Vol. 01 · Edition {new Date().getFullYear()}</span>
+        <span className="hidden md:inline">A curated index for digital craft</span>
+        <span>{new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" })}</span>
+      </div>
+
+      <div className="grid items-end gap-16 lg:grid-cols-12">
+        {/* Headline */}
+        <div className="lg:col-span-8">
+          <h1 className="font-serif tracking-[-0.02em] text-[clamp(3.25rem,9vw,8.5rem)] leading-[0.88]">
+            The quiet
+            <br />
+            <em className="italic">job board</em> for
+            <br />
+            people who <span className="italic">build</span>
+            <br />
+            the open web.
           </h1>
-          <p className="mt-8 max-w-[58ch] text-pretty text-lg leading-relaxed text-muted-foreground">
-            A curated index of opportunities for AdOps, programmatic, SEO, social, affiliate,
-            design, WordPress and AI marketing specialists — at every level, from fresher to senior.
-          </p>
+
+          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <Link
+              to="/post-job"
+              className="group inline-flex items-center gap-3 bg-foreground py-3 pl-5 pr-3 text-sm font-medium text-background ring-1 ring-foreground transition-transform active:scale-[0.98]"
+            >
+              Post a role
+              <span className="grid size-6 place-items-center bg-background text-foreground transition-transform group-hover:translate-x-0.5">
+                <ArrowRight className="size-3.5" />
+              </span>
+            </Link>
+            <a
+              href="#board"
+              className="inline-flex items-center gap-2 text-sm font-medium underline decoration-border underline-offset-[6px] hover:decoration-foreground"
+            >
+              Browse {count} open roles
+            </a>
+          </div>
         </div>
 
-        <aside className="rounded-lg bg-muted p-6 ring-1 ring-border">
-          <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-            Live this week
+        {/* Index card */}
+        <aside className="lg:col-span-4">
+          <div className="border-t border-foreground pt-5">
+            <p className="font-serif text-sm italic text-muted-foreground">
+              An editorial career index for AdOps, programmatic, SEO, social, affiliate, design,
+              WordPress and AI marketing specialists — read by 38,000 operators each week.
+            </p>
+          </div>
+          <dl className="mt-8 grid grid-cols-3 divide-x divide-border border-y border-border">
+            <Stat n={count.toString().padStart(2, "0")} l="Live roles" />
+            <Stat n="12" l="Disciplines" />
+            <Stat n="04" l="Levels" />
+          </dl>
+          <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+            Updated hourly · No recruiters
           </p>
-          <div className="flex items-baseline gap-2">
-            <span className="font-serif text-6xl italic">{count.toString().padStart(2, "0")}</span>
-            <span className="text-sm text-muted-foreground">curated roles</span>
-          </div>
-          <div className="mt-5 h-px w-full bg-border" />
-          <div className="mt-5 flex justify-between text-xs text-muted-foreground">
-            <span>Updated hourly</span>
-            <span className="font-serif italic">No spam · no recruiters</span>
-          </div>
         </aside>
       </div>
     </header>
+  );
+}
+
+function Stat({ n, l }: { n: string; l: string }) {
+  return (
+    <div className="px-3 py-4 text-center first:pl-0 last:pr-0">
+      <div className="font-serif text-3xl italic leading-none">{n}</div>
+      <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">{l}</div>
+    </div>
+  );
+}
+
+function Marquee() {
+  const items = [
+    "Programmatic",
+    "AdOps",
+    "SEO",
+    "Affiliate",
+    "Media Buying",
+    "AI Marketing",
+    "WordPress",
+    "Design",
+    "Social",
+    "Digital Strategy",
+  ];
+  return (
+    <div className="relative overflow-hidden border-y border-border bg-muted/50 py-5">
+      <div className="flex animate-[marquee_45s_linear_infinite] gap-12 whitespace-nowrap">
+        {[...items, ...items, ...items].map((it, i) => (
+          <span
+            key={i}
+            className="font-serif text-3xl italic text-muted-foreground/80"
+          >
+            {it} <span className="not-italic text-foreground/30">✦</span>
+          </span>
+        ))}
+      </div>
+      <style>{`@keyframes marquee { to { transform: translateX(-33.333%); } }`}</style>
+    </div>
+  );
+}
+
+function DisciplinesCatalog() {
+  const items: { n: string; name: string; blurb: string }[] = [
+    { n: "01", name: "Programmatic", blurb: "DSPs, SSPs, supply paths, bid logic, MMM." },
+    { n: "02", name: "AdOps", blurb: "Trafficking, QA, GAM, attribution, brand safety." },
+    { n: "03", name: "Media Buying", blurb: "Meta, TikTok, Google, performance creative." },
+    { n: "04", name: "SEO", blurb: "Technical, on-page, link, programmatic content." },
+    { n: "05", name: "Affiliate", blurb: "Partner programs, networks, payouts, tracking." },
+    { n: "06", name: "Social", blurb: "Org social, community, TikTok-first, short-form." },
+    { n: "07", name: "Design", blurb: "Brand, marketing, motion, ad creative." },
+    { n: "08", name: "WordPress", blurb: "Headless, custom themes, ACF, performance." },
+    { n: "09", name: "AI Marketing", blurb: "Generative workflows, RAG, prompt systems." },
+  ];
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-24">
+      <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+            § Disciplines we cover
+          </p>
+          <h2 className="max-w-2xl font-serif text-4xl leading-[1] tracking-tight md:text-5xl">
+            Twelve disciplines.{" "}
+            <em className="italic text-muted-foreground">One careful index.</em>
+          </h2>
+        </div>
+        <a
+          href="#board"
+          className="inline-flex items-center gap-2 text-sm font-medium underline decoration-border underline-offset-[6px] hover:decoration-foreground"
+        >
+          See all open roles <ArrowRight className="size-4" />
+        </a>
+      </div>
+      <div className="grid grid-cols-1 gap-px overflow-hidden bg-border ring-1 ring-border md:grid-cols-2 lg:grid-cols-3">
+        {items.map((it) => (
+          <article
+            key={it.n}
+            className="group flex items-start gap-5 bg-background p-7 transition-colors hover:bg-muted/60"
+          >
+            <span className="font-serif text-2xl italic text-muted-foreground">{it.n}</span>
+            <div>
+              <h3 className="font-serif text-2xl leading-tight">{it.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{it.blurb}</p>
+            </div>
+            <ArrowUpRight className="ml-auto size-4 -translate-y-0.5 text-muted-foreground transition-all group-hover:-translate-y-1 group-hover:translate-x-0.5 group-hover:text-foreground" />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ClosingBand() {
+  return (
+    <section className="border-t border-border bg-foreground text-background">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1fr_auto] lg:items-end">
+        <h2 className="font-serif text-5xl leading-[0.95] tracking-tight md:text-7xl">
+          Hiring a specialist?
+          <br />
+          <em className="italic text-background/60">Skip the noise.</em>
+        </h2>
+        <div className="flex flex-col items-start gap-4">
+          <p className="max-w-sm text-pretty text-background/70">
+            Reach 38,000 working operators in adtech, growth and the open web. Listings priced
+            once, no add-ons, no auto-renew.
+          </p>
+          <Link
+            to="/post-job"
+            className="group inline-flex items-center gap-3 bg-background py-3 pl-5 pr-3 text-sm font-medium text-foreground"
+          >
+            Post a role — $99
+            <span className="grid size-6 place-items-center bg-foreground text-background transition-transform group-hover:translate-x-0.5">
+              <ArrowRight className="size-3.5" />
+            </span>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 
