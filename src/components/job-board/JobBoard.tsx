@@ -346,10 +346,10 @@ function ClosingBand() {
           </p>
           <Link
             to="/post-job"
-            className="group inline-flex items-center gap-3 bg-background py-3 pl-5 pr-3 text-sm font-medium text-foreground"
+            className="group inline-flex items-center gap-3 rounded-full bg-background py-3 pl-6 pr-3 text-sm font-medium text-foreground"
           >
             Post a role — $99
-            <span className="grid size-6 place-items-center bg-foreground text-background transition-transform group-hover:translate-x-0.5">
+            <span className="grid size-7 place-items-center rounded-full bg-brand text-brand-foreground transition-transform group-hover:translate-x-0.5">
               <ArrowRight className="size-3.5" />
             </span>
           </Link>
