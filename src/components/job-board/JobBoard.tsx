@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, MapPin, Plus, Search, Sparkles } from "lucide-react";
+import { ArrowUpRight, MapPin, Plus, Search, ArrowRight } from "lucide-react";
 import { JOBS, LEVELS, ROLES, TYPES, type Job } from "./data";
 import { cn } from "@/lib/utils";
 
@@ -44,9 +44,11 @@ export function JobBoard() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <Hero count={JOBS.length} />
+      <Marquee />
+      <DisciplinesCatalog />
 
       {/* Sticky search & filter rail */}
-      <section className="sticky top-0 z-40 border-y border-border bg-background/85 backdrop-blur-md">
+      <section id="board" className="sticky top-0 z-40 border-y border-border bg-background/85 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative flex-1">
