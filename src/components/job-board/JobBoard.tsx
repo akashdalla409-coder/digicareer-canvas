@@ -129,21 +129,21 @@ function SiteHeader() {
   return (
     <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-7">
       <div className="flex items-center gap-10">
-        <a href="/" className="font-serif text-3xl italic tracking-tight">
+        <Link to="/" className="font-serif text-3xl italic tracking-tight">
           DigiCareers
-        </a>
+        </Link>
         <div className="hidden gap-7 text-sm font-medium text-muted-foreground lg:flex">
-          <a href="#" className="transition-colors hover:text-foreground">Browse Roles</a>
+          <Link to="/" className="transition-colors hover:text-foreground">Browse Roles</Link>
           <a href="#" className="transition-colors hover:text-foreground">Company Index</a>
           <a href="#" className="transition-colors hover:text-foreground">Salary Report</a>
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <button className="text-sm font-medium text-muted-foreground hover:text-foreground">Log in</button>
-        <button className="flex items-center gap-2 bg-foreground py-2 pl-3 pr-4 text-sm font-medium text-background ring-1 ring-foreground transition-transform active:scale-[0.98]">
+        <Link to="/sign-in" className="text-sm font-medium text-muted-foreground hover:text-foreground">Log in</Link>
+        <Link to="/post-job" className="flex items-center gap-2 bg-foreground py-2 pl-3 pr-4 text-sm font-medium text-background ring-1 ring-foreground transition-transform active:scale-[0.98]">
           <Plus className="size-4" />
           Post a job
-        </button>
+        </Link>
       </div>
     </nav>
   );
