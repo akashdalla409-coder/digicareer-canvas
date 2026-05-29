@@ -276,10 +276,14 @@ function JobRow({ job }: { job: Job }) {
         </div>
         <div className="flex items-center gap-4 lg:flex-col lg:items-end">
           <span className="text-xs font-medium text-muted-foreground">Posted {job.postedAgo}</span>
-          <button className="flex items-center gap-2 bg-muted py-1.5 pl-3 pr-4 text-sm font-medium text-foreground ring-1 ring-foreground transition-colors group-hover:bg-foreground group-hover:text-background">
+          <Link
+            to="/jobs/$id"
+            params={{ id: job.id }}
+            className="flex items-center gap-2 bg-muted py-1.5 pl-3 pr-4 text-sm font-medium text-foreground ring-1 ring-foreground transition-colors group-hover:bg-foreground group-hover:text-background"
+          >
             <ArrowUpRight className="size-4" />
             View details
-          </button>
+          </Link>
         </div>
       </div>
     </article>
