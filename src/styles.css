@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap");
 
 /*
  * Design system definition.
@@ -63,30 +63,40 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
   /* Editorial archival palette — warm paper, deep ink */
   --background: oklch(0.985 0.003 90);          /* #fafaf8 paper */
-  --foreground: oklch(0.18 0.005 270);          /* near-black ink */
+  --foreground: oklch(0.20 0.02 280);           /* deep ink with subtle blue */
   --card: oklch(0.99 0.002 90);
   --card-foreground: oklch(0.18 0.005 270);
   --popover: oklch(0.99 0.002 90);
   --popover-foreground: oklch(0.18 0.005 270);
-  --primary: oklch(0.18 0.005 270);
-  --primary-foreground: oklch(0.985 0.003 90);
+  --primary: oklch(0.62 0.19 38);               /* warm terracotta accent */
+  --primary-foreground: oklch(0.985 0.01 80);
   --secondary: oklch(0.955 0.004 90);
   --secondary-foreground: oklch(0.18 0.005 270);
   --muted: oklch(0.955 0.004 90);
   --muted-foreground: oklch(0.5 0.005 270);
-  --accent: oklch(0.93 0.005 90);
-  --accent-foreground: oklch(0.18 0.005 270);
+  --accent: oklch(0.88 0.12 95);                /* soft sun yellow */
+  --accent-foreground: oklch(0.20 0.02 280);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.985 0.003 90);
   --border: oklch(0.9 0.004 90);
   --input: oklch(0.9 0.004 90);
-  --ring: oklch(0.18 0.005 270);
+  --ring: oklch(0.62 0.19 38);
+  --brand: oklch(0.62 0.19 38);                 /* terracotta */
+  --brand-foreground: oklch(0.985 0.01 80);
+  --cream: oklch(0.96 0.03 90);                 /* warm cream surface */
+  --ink: oklch(0.20 0.02 280);                  /* near-black */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);

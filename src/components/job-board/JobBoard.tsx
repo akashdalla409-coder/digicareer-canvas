@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, MapPin, Plus, Search, ArrowRight } from "lucide-react";
+import { ArrowUpRight, MapPin, Plus, Search, ArrowRight, Sparkles } from "lucide-react";
 import { JOBS, LEVELS, ROLES, TYPES, type Job } from "./data";
 import { cn } from "@/lib/utils";
 
@@ -49,7 +49,7 @@ export function JobBoard() {
 
       {/* Sticky search & filter rail */}
       <section id="board" className="sticky top-0 z-40 border-y border-border bg-background/85 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-6 py-4">
+        <div className="mx-auto max-w-7xl px-6 py-3">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative flex-1">
               <Search className="pointer-events-none absolute left-0 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -65,7 +65,7 @@ export function JobBoard() {
             <div className="flex flex-wrap items-center gap-2">
               <FilterSelect label="Level" value={level} onChange={setLevel} options={LEVELS as readonly string[]} />
               <FilterSelect label="Type" value={type} onChange={setType} options={TYPES as readonly string[]} />
-              <div className="flex items-center gap-1.5 bg-muted px-3 py-1.5 ring-1 ring-border">
+              <div className="flex items-center gap-1.5 rounded-full bg-muted px-4 py-1.5 ring-1 ring-border">
                 <MapPin className="size-3.5 text-muted-foreground" />
                 <input
                   value={location}
@@ -129,22 +129,30 @@ export function JobBoard() {
 
 function SiteHeader() {
   return (
-    <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-7">
+    <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
       <div className="flex items-center gap-10">
-        <Link to="/" className="font-serif text-3xl italic tracking-tight">
-          DigiCareers
+        <Link to="/" className="group flex items-baseline gap-1.5 font-[family-name:var(--font-display)] text-2xl font-medium tracking-tight">
+          <span className="grid size-7 place-items-center rounded-full bg-brand text-brand-foreground">
+            <span className="font-serif text-base italic leading-none">d</span>
+          </span>
+          digi<em className="italic text-brand">careers</em>
         </Link>
-        <div className="hidden gap-7 text-sm font-medium text-muted-foreground lg:flex">
-          <Link to="/" className="transition-colors hover:text-foreground">Browse Roles</Link>
-          <a href="#" className="transition-colors hover:text-foreground">Company Index</a>
-          <a href="#" className="transition-colors hover:text-foreground">Salary Report</a>
+        <div className="hidden gap-7 text-sm text-muted-foreground lg:flex">
+          <a href="#board" className="transition-colors hover:text-foreground">Browse roles</a>
+          <Link to="/companies" className="transition-colors hover:text-foreground">Companies</Link>
+          <Link to="/about" className="transition-colors hover:text-foreground">About</Link>
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <Link to="/sign-in" className="text-sm font-medium text-muted-foreground hover:text-foreground">Log in</Link>
-        <Link to="/post-job" className="flex items-center gap-2 bg-foreground py-2 pl-3 pr-4 text-sm font-medium text-background ring-1 ring-foreground transition-transform active:scale-[0.98]">
-          <Plus className="size-4" />
-          Post a job
+        <Link to="/post-job" className="hidden text-sm text-muted-foreground hover:text-foreground sm:inline">Post a job</Link>
+        <Link
+          to="/sign-up"
+          className="group flex items-center gap-2 rounded-full bg-foreground py-2 pl-4 pr-2 text-sm font-medium text-background transition-transform active:scale-[0.98]"
+        >
+          Sign up — it's free
+          <span className="grid size-7 place-items-center rounded-full bg-brand text-brand-foreground transition-transform group-hover:translate-x-0.5">
+            <ArrowRight className="size-3.5" />
+          </span>
         </Link>
       </div>
     </nav>
@@ -153,73 +161,91 @@ function SiteHeader() {
 
 function Hero({ count }: { count: number }) {
   return (
-    <header className="relative mx-auto max-w-7xl px-6 pb-24 pt-8">
+    <header className="relative mx-auto flex min-h-[calc(100vh-88px)] max-w-7xl flex-col justify-between px-6 pb-12 pt-6">
       {/* Top meta strip — masthead style */}
-      <div className="mb-16 flex items-center justify-between border-b border-border pb-4 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-        <span>Vol. 01 · Edition {new Date().getFullYear()}</span>
+      <div className="flex items-center justify-between border-b border-border pb-4 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+        <span className="inline-flex items-center gap-2">
+          <span className="inline-block size-1.5 animate-pulse rounded-full bg-brand" />
+          {count} live roles · updated hourly
+        </span>
         <span className="hidden md:inline">A curated index for digital craft</span>
-        <span>{new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" })}</span>
+        <span className="font-[family-name:var(--font-mono)] normal-case tracking-normal text-foreground/60">v.01</span>
       </div>
 
-      <div className="grid items-end gap-16 lg:grid-cols-12">
-        {/* Headline */}
-        <div className="lg:col-span-8">
-          <h1 className="font-serif tracking-[-0.02em] text-[clamp(3.25rem,9vw,8.5rem)] leading-[0.88]">
-            The quiet
-            <br />
-            <em className="italic">job board</em> for
-            <br />
-            people who <span className="italic">build</span>
-            <br />
-            the open web.
-          </h1>
+      {/* Big hero line */}
+      <div className="flex flex-1 flex-col justify-center py-16">
+        <p className="mb-8 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-xs font-medium text-accent-foreground">
+          <Sparkles className="size-3.5" />
+          Built for digital marketing specialists
+        </p>
+        <h1 className="font-[family-name:var(--font-display)] text-[clamp(3rem,10vw,9.5rem)] font-light leading-[0.9] tracking-[-0.04em]">
+          Find your next
+          <br />
+          <span className="italic text-brand">digital</span> career
+          <br />
+          <span className="relative inline-block">
+            in <em className="italic">good company</em>.
+            <svg
+              aria-hidden
+              viewBox="0 0 300 12"
+              preserveAspectRatio="none"
+              className="absolute -bottom-2 left-0 h-2 w-full text-brand"
+            >
+              <path
+                d="M2 8 Q 75 1, 150 6 T 298 4"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+        </h1>
 
-          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <Link
-              to="/post-job"
-              className="group inline-flex items-center gap-3 bg-foreground py-3 pl-5 pr-3 text-sm font-medium text-background ring-1 ring-foreground transition-transform active:scale-[0.98]"
-            >
-              Post a role
-              <span className="grid size-6 place-items-center bg-background text-foreground transition-transform group-hover:translate-x-0.5">
-                <ArrowRight className="size-3.5" />
-              </span>
-            </Link>
-            <a
-              href="#board"
-              className="inline-flex items-center gap-2 text-sm font-medium underline decoration-border underline-offset-[6px] hover:decoration-foreground"
-            >
-              Browse {count} open roles
-            </a>
-          </div>
+        <p className="mt-10 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          A handpicked job board for <span className="text-foreground">AdOps, programmatic, SEO,
+          performance, social, design, WordPress &amp; AI marketing</span> specialists. No
+          recruiters. No noise. Just the work.
+        </p>
+
+        <div className="mt-10 flex flex-wrap items-center gap-3">
+          <a
+            href="#board"
+            className="group inline-flex items-center gap-3 rounded-full bg-foreground py-3 pl-6 pr-3 text-sm font-medium text-background transition-transform active:scale-[0.98]"
+          >
+            Browse {count} open roles
+            <span className="grid size-8 place-items-center rounded-full bg-brand text-brand-foreground transition-transform group-hover:translate-x-0.5">
+              <ArrowRight className="size-4" />
+            </span>
+          </a>
+          <Link
+            to="/post-job"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-5 py-3 text-sm font-medium hover:bg-muted"
+          >
+            <Plus className="size-4" />
+            Post a role
+          </Link>
         </div>
-
-        {/* Index card */}
-        <aside className="lg:col-span-4">
-          <div className="border-t border-foreground pt-5">
-            <p className="font-serif text-sm italic text-muted-foreground">
-              An editorial career index for AdOps, programmatic, SEO, social, affiliate, design,
-              WordPress and AI marketing specialists — read by 38,000 operators each week.
-            </p>
-          </div>
-          <dl className="mt-8 grid grid-cols-3 divide-x divide-border border-y border-border">
-            <Stat n={count.toString().padStart(2, "0")} l="Live roles" />
-            <Stat n="12" l="Disciplines" />
-            <Stat n="04" l="Levels" />
-          </dl>
-          <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-            Updated hourly · No recruiters
-          </p>
-        </aside>
       </div>
+
+      {/* Bottom stat bar */}
+      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-border ring-1 ring-border md:grid-cols-4">
+        <Stat n={count.toString().padStart(2, "0")} l="Live roles" />
+        <Stat n="12" l="Disciplines" />
+        <Stat n="04" l="Career levels" />
+        <Stat n="38k" l="Weekly readers" />
+      </dl>
     </header>
   );
 }
 
 function Stat({ n, l }: { n: string; l: string }) {
   return (
-    <div className="px-3 py-4 text-center first:pl-0 last:pr-0">
-      <div className="font-serif text-3xl italic leading-none">{n}</div>
-      <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">{l}</div>
+    <div className="flex items-baseline justify-between gap-3 bg-background px-5 py-5">
+      <div className="font-[family-name:var(--font-display)] text-4xl font-light leading-none tracking-tight">
+        {n}
+      </div>
+      <div className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">{l}</div>
     </div>
   );
 }
@@ -245,7 +271,7 @@ function Marquee() {
             key={i}
             className="font-serif text-3xl italic text-muted-foreground/80"
           >
-            {it} <span className="not-italic text-foreground/30">✦</span>
+            {it} <span className="not-italic text-brand">✦</span>
           </span>
         ))}
       </div>
@@ -320,10 +346,10 @@ function ClosingBand() {
           </p>
           <Link
             to="/post-job"
-            className="group inline-flex items-center gap-3 bg-background py-3 pl-5 pr-3 text-sm font-medium text-foreground"
+            className="group inline-flex items-center gap-3 rounded-full bg-background py-3 pl-6 pr-3 text-sm font-medium text-foreground"
           >
             Post a role — $99
-            <span className="grid size-6 place-items-center bg-foreground text-background transition-transform group-hover:translate-x-0.5">
+            <span className="grid size-7 place-items-center rounded-full bg-brand text-brand-foreground transition-transform group-hover:translate-x-0.5">
               <ArrowRight className="size-3.5" />
             </span>
           </Link>
@@ -345,7 +371,7 @@ function FilterSelect({
   options: readonly string[];
 }) {
   return (
-    <div className="flex items-center gap-1.5 bg-muted px-3 py-1.5 ring-1 ring-border">
+    <div className="flex items-center gap-1.5 rounded-full bg-muted px-4 py-1.5 ring-1 ring-border">
       <span className="text-xs font-medium text-muted-foreground">{label}:</span>
       <select
         value={value ?? ""}
@@ -376,9 +402,9 @@ function Chip({
     <button
       onClick={onClick}
       className={cn(
-        "px-4 py-1.5 text-sm font-medium ring-1 ring-border transition-colors",
+        "rounded-full px-4 py-1.5 text-sm font-medium ring-1 ring-border transition-colors",
         active
-          ? "bg-foreground text-background"
+          ? "bg-foreground text-background ring-foreground"
           : "bg-muted text-muted-foreground hover:bg-accent hover:text-foreground"
       )}
     >
@@ -399,8 +425,8 @@ function JobRow({ job }: { job: Job }) {
     <article className="group relative bg-background p-8 transition-colors hover:bg-muted/60">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex gap-6">
-          <div className="grid size-14 shrink-0 place-items-center rounded-md bg-muted ring-1 ring-border">
-            <span className="font-serif text-lg italic">{monogram}</span>
+          <div className="grid size-14 shrink-0 place-items-center rounded-full bg-accent ring-1 ring-border">
+            <span className="font-serif text-lg italic text-accent-foreground">{monogram}</span>
           </div>
           <div>
             <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -426,7 +452,7 @@ function JobRow({ job }: { job: Job }) {
           <Link
             to="/jobs/$id"
             params={{ id: job.id }}
-            className="flex items-center gap-2 bg-muted py-1.5 pl-3 pr-4 text-sm font-medium text-foreground ring-1 ring-foreground transition-colors group-hover:bg-foreground group-hover:text-background"
+            className="flex items-center gap-2 rounded-full bg-muted py-1.5 pl-3 pr-4 text-sm font-medium text-foreground ring-1 ring-foreground transition-colors group-hover:bg-brand group-hover:text-brand-foreground group-hover:ring-brand"
           >
             <ArrowUpRight className="size-4" />
             View details
@@ -439,7 +465,7 @@ function JobRow({ job }: { job: Job }) {
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ring-1 ring-border bg-muted">
+    <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ring-1 ring-border">
       {children}
     </span>
   );
@@ -452,7 +478,7 @@ function EmptyState({ onReset }: { onReset: () => void }) {
       <p className="mt-2 text-muted-foreground">Try widening your filters or clearing the search.</p>
       <button
         onClick={onReset}
-        className="mt-6 inline-flex bg-foreground px-4 py-2 text-sm font-medium text-background"
+        className="mt-6 inline-flex rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background"
       >
         Reset filters
       </button>
@@ -485,7 +511,7 @@ function SiteFooter() {
         </div>
         <div className="mt-20 flex flex-col gap-3 border-t border-border pt-6 md:flex-row md:items-center md:justify-between">
           <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            © {new Date().getFullYear()} DigiCareers. All rights reserved.
+            © DigiCareers. All rights reserved.
           </p>
           <div className="flex gap-6 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             <a href="#" className="hover:text-foreground">Privacy</a>
